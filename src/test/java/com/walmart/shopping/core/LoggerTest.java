@@ -1,13 +1,11 @@
 package com.walmart.shopping.core;
 
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import com.walmart.shopping.core.exception.IntelLoggerException;
+import com.walmart.shopping.utils.LoggerUtil;
 import org.assertj.core.api.Assertions;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,18 +15,15 @@ class LoggerTest {
 
     @Test
     public void registerLoggerInfo(){
-        Logger logger = (Logger) LoggerFactory.getLogger(IntelLogger.class);
-        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-        listAppender.start();
-        logger.addAppender(listAppender);
+        LoggerUtil log = new LoggerUtil();
 
         IntelLogger.info("test")
                 .description("description")
                 .message("message")
                 .requestId("reqId")
-                .to(logger);
+                .to(log.getLogger());
 
-        List<ILoggingEvent> logsList = listAppender.list;
+        List<ILoggingEvent> logsList = log.getList();
 
         Assertions.assertThat(logsList.get(0).toString())
                 .isEqualTo("[INFO] requestId=reqId, action=test, description=description, message=message");
@@ -38,18 +33,15 @@ class LoggerTest {
 
     @Test
     public void registerLoggerError(){
-        Logger logger = (Logger) LoggerFactory.getLogger(IntelLogger.class);
-        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-        listAppender.start();
-        logger.addAppender(listAppender);
+        LoggerUtil log = new LoggerUtil();
 
         IntelLogger.error("testError")
                 .description("description")
                 .message("message")
                 .requestId("reqId")
-                .to(logger);
+                .to(log.getLogger());
 
-        List<ILoggingEvent> logsList = listAppender.list;
+        List<ILoggingEvent> logsList = log.getList();
 
         Assertions.assertThat(logsList.get(0).toString())
                 .isEqualTo("[ERROR] requestId=reqId, action=testError, description=description, error=message");
@@ -59,17 +51,14 @@ class LoggerTest {
 
     @Test
     public void registerLoggerInfoWhenActionIsEmpty() throws IntelLoggerException {
-        Logger logger = (Logger) LoggerFactory.getLogger(IntelLogger.class);
-        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
-        listAppender.start();
-        logger.addAppender(listAppender);
+        LoggerUtil log = new LoggerUtil();
 
         Exception exception = assertThrows(IntelLoggerException.class, () -> {
             IntelLogger.info("")
                     .description("description")
                     .message("message")
                     .requestId("reqId")
-                    .to(logger);
+                    .to(log.getLogger());
         });
 
         String expectedMessage = "action is required";
