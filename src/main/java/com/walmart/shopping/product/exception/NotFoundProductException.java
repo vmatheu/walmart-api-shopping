@@ -4,11 +4,11 @@ import com.walmart.shopping.core.IntelLogger;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class FormatErrorInput extends RuntimeException{
+public class NotFoundProductException extends RuntimeException{
 
-    public FormatErrorInput(Exception exception, String error) {
-        super(exception);
-        IntelLogger.error("loggerException")
+    public NotFoundProductException(String error) {
+        super(error);
+        IntelLogger.error("notFoundProductException")
                 .message(error)
                 .to(log);
     }

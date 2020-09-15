@@ -1,6 +1,6 @@
 package com.walmart.shopping.product;
 
-import com.walmart.shopping.product.exception.FormatErrorInput;
+import com.walmart.shopping.product.exception.FormatErrorInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.walmart.shopping.core.IntelLogger;
@@ -32,16 +32,11 @@ public class ProductController {
         IntelLogger.info("getProductById").description("service init")
                 .message(String.format("product id %s", productId)).to(log);
         try {
-            Integer productIdInteger = validateProductId(productId);
-            //TODO calling product services
-            Product product = new Product();
-            product.setId(productIdInteger);
-
+            Product product = productService.getProductById(validateProductId(productId));
             IntelLogger.info("getProductById").description("service end")
-                    .message(String.format("product id %d", productIdInteger)).to(log);
+                    .message(String.format("product id %d", product.getId())).to(log);
 
             return ok(product);
-
         } catch (Exception exception) {
             IntelLogger.error("getProductById").description("service end")
                 .message(String.format("product id %s error [%s]", productId, exception.getMessage()))
@@ -55,7 +50,7 @@ public class ProductController {
         try {
             return Integer.parseInt(productId);
         } catch (NumberFormatException exception) {
-            throw new FormatErrorInput(exception, "invalid format product id");
+            throw new FormatErrorInputException(exception, "invalid format product id");
         }
     }
 }
