@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://userproduct:userproduct@promotionscluster-shard-00-00.4tp5t.gcp.mongodb.net:27017,promotionscluster-shard-00-01.4tp5t.gcp.mongodb.net:27017,promotionscluster-shard-00-02.4tp5t.gcp.mongodb.net:27017/promotion?ssl=true&replicaSet=atlas-58nofd-shard-0&authSource=admin&retryWrites=true&w=majority
+  application:
+    name: wallmart-api-shopping
