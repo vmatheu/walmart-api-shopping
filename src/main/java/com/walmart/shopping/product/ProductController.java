@@ -23,8 +23,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    ProductController(Logger log) {
+    ProductController(Logger log, ProductService productService) {
         this.log = log;
+        this.productService = productService;
     }
 
     @RequestMapping("/product/{productId}")
