@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class LoggerTest {
 
     @Test
-    public void registerLoggerInfo(){
+    public void shouldRegisterLogWithLevelInfo(){
         LoggerUtil log = new LoggerUtil();
 
         IntelLogger.info("test")
@@ -32,7 +32,7 @@ class LoggerTest {
     }
 
     @Test
-    public void registerLoggerError(){
+    public void shouldRegisterLogError(){
         LoggerUtil log = new LoggerUtil();
 
         IntelLogger.error("testError")
@@ -50,7 +50,7 @@ class LoggerTest {
     }
 
     @Test
-    public void registerLoggerInfoWhenActionIsEmpty() throws IntelLoggerException {
+    public void shouldReturnErrorWhenActionIsEmpty() throws IntelLoggerException {
         LoggerUtil log = new LoggerUtil();
 
         Exception exception = assertThrows(IntelLoggerException.class, () -> {

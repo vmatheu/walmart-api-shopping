@@ -13,21 +13,21 @@ import java.util.List;
 class ProductControllerTest {
 
 	@Test
-    void getProductByIdWhenInputIsCorrect() {
+    void shouldReturnProductWhenIdFormatNumberIsCorrect() {
         ProductController productController = new ProductController(Mockito.mock(ProductService.class));
         ResponseEntity<Product> product = productController.getProductById("123");
         Assertions.assertThat(product.getBody().getId()).isEqualTo(123);
     }
 
     @Test
-    void getProductByIdWhenInputIsNotCorrect() {
+    void shouldReturnErrorWhenIdFormatNumberIsNotCorrect() {
         ProductController productController = new ProductController(Mockito.mock(ProductService.class));
         ResponseEntity<Product> product = productController.getProductById("123a");
         Assertions.assertThat(product.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    void validateLogGetProductById() {
+    void shouldReturnLogsServiceInitAndServiceEnd() {
         LoggerUtil loggerUtil = new LoggerUtil();
         ProductController productController = new ProductController(loggerUtil.getLogger());
         productController.getProductById("123");

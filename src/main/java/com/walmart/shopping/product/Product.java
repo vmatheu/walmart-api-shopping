@@ -12,10 +12,15 @@ public class Product implements Serializable {
     @Field("id")
     private int id;
 
+    @Field("brand")
     private String brand;
 
+    @Field("description")
     private String description;
 
+    @Field("image")
     private String image;
+
+    @Field("price")
     private int price;
 }
