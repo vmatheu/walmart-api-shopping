@@ -50,8 +50,9 @@ public class Product implements Serializable {
         if (id != product.id) return false;
         if (price != product.price) return false;
         if (priceWithOutDiscount != product.priceWithOutDiscount) return false;
-        if (!brand.equals(product.brand)) return false;
-        if (!description.equals(product.description)) return false;
-        return image.equals(product.image);
+        if (priceHaveDiscount != product.priceHaveDiscount) return false;
+        if (brand != null ? !brand.equals(product.brand) : product.brand != null) return false;
+        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        return image != null ? image.equals(product.image) : product.image == null;
     }
 }
