@@ -8,8 +8,11 @@ import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.anyInt;
@@ -22,34 +25,28 @@ class ProductControllerTest {
         ProductService productService = mock(ProductService.class);
         Product product = new Product();
         product.setId(123);
-        when(productService.getProductById(anyInt())).thenReturn(product);
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+        when(productService.findProductByString(anyString())).thenReturn(products);
         ProductController productController = new ProductController(productService);
-        ResponseEntity<Product> response = productController.getProductById("123");
-        Assertions.assertThat(response.getBody().getId()).isEqualTo(123);
-    }
-
-    @Test
-    void shouldReturnErrorWhenIdFormatNumberIsNotCorrect() {
-        ProductController productController = new ProductController(Mockito.mock(ProductService.class));
-        ResponseEntity<Product> product = productController.getProductById("123a");
-        Assertions.assertThat(product.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseEntity<List<Product>> response = productController.findProductByString("123");
+        Assertions.assertThat(response.getBody().get(0).getId()).isEqualTo(123);
     }
 
     @Test
     void shouldReturnLogsServiceInitAndServiceEnd() {
         LoggerUtil loggerUtil = new LoggerUtil();
         ProductService productService = mock(ProductService.class);
-        Product product = new Product();
-        product.setId(123);
-        when(productService.getProductById(anyInt())).thenReturn(product);
+        List<Product> products = Collections.emptyList();
+        when(productService.findProductByString(anyString())).thenReturn(products);
         ProductController productController = new ProductController(loggerUtil.getLogger(), productService);
         List<ILoggingEvent> logsList = loggerUtil.getList();
 
-        productController.getProductById("123");
+        productController.findProductByString("123");
         Assertions.assertThat(logsList.size()).isEqualTo(2);
         Assertions.assertThat(logsList.get(0).toString())
-                .isEqualTo("[INFO] requestId=, action=getProductById, description=service init, message=product id 123");
+                .isEqualTo("[INFO] requestId=, action=findProductByString, description=service init, message=product search 123");
         Assertions.assertThat(logsList.get(1).toString())
-                .isEqualTo("[INFO] requestId=, action=getProductById, description=service end, message=product id 123");
+                .isEqualTo("[INFO] requestId=, action=findProductByString, description=service end, message=product search 123");
     }
 }

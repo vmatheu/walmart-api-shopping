@@ -5,6 +5,8 @@ import com.walmart.shopping.product.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,11 +17,11 @@ import static org.mockito.Mockito.anyInt;
 class ProductServiceTest {
 
     @Test
-    void shouldReturnProductObject() {
+    void shouldReturnEmptyCollectionWhenNotHaveMatch() {
         ProductRepository productRepository = mock(ProductRepository.class);
         when(productRepository.findById(anyInt())).thenReturn(Optional.of(new Product()));
         ProductService productService = new ProductService(productRepository);
-        Assertions.assertThat(productService.getProductById(1)).isInstanceOf(Product.class);
+        Assertions.assertThat(productService.findProductByString("1")).isInstanceOf(ArrayList.class);
     }
 
     @Test
@@ -29,7 +31,7 @@ class ProductServiceTest {
         ProductService productService = new ProductService(productRepository);
 
         Exception exception = assertThrows(NotFoundProductException.class, () -> {
-            productService.getProductById(1);
+            productService.findProductByString("1");
         });
 
         String expectedMessage = "product id 1 is not found";

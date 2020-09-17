@@ -5,6 +5,9 @@ import com.walmart.shopping.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 @Service
@@ -17,12 +20,22 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product getProductById(Integer productId) {
-        return this.productRepository.findById(productId)
-                .orElseThrow(notFoundProductSupplier(productId));
+    public List<Product> findProductByString(String search) {
+        if (isNumeric(search)) {
+            List<Product> results = new ArrayList<>();
+            results.add(this.productRepository.findById(Integer.parseInt(search))
+                    .orElseThrow(notFoundProductSupplier(search)));
+            return results;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
-    private Supplier<RuntimeException> notFoundProductSupplier(Integer productId) {
-        return () -> {throw new NotFoundProductException(String.format("product id %d is not found", productId));};
+    private static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private Supplier<RuntimeException> notFoundProductSupplier(String search) {
+        return () -> {throw new NotFoundProductException(String.format("product id %s is not found", search));};
     }
 }
