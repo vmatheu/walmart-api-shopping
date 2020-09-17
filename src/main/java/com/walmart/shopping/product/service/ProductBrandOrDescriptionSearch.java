@@ -12,15 +12,17 @@ import java.util.List;
 class ProductBrandOrDescriptionSearch implements Search {
 
     private ProductRepository productRepository;
+    private Integer searchMinimumSize;
 
     @Autowired
     public ProductBrandOrDescriptionSearch(ProductRepository productRepository) {
         this.productRepository = productRepository;
+        this.searchMinimumSize = 3;
     }
 
     @Override
     public List<Product> findProducts(String search) {
-        if (search.length() >= 3) {
+        if (search.length() >= this.searchMinimumSize) {
             return this.productRepository.findByDescriptionLikeOrBrandLike(search, search);
         } else {
             return Collections.emptyList();
