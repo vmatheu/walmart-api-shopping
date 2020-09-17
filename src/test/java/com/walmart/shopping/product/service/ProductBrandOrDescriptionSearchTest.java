@@ -35,4 +35,15 @@ class ProductBrandOrDescriptionSearchTest {
         Search search = new ProductBrandOrDescriptionSearch(productRepository);
         Assertions.assertThat(search.findProducts("1ad").size()).isEqualTo(3);
     }
+
+    @Test
+    void shouldReturnEmptyListWhenStringSearchIsLessThanThreeCharacter() {
+        ProductRepository productRepository = mock(ProductRepository.class);
+        List<Product> products = new ArrayList<>();
+        products.add(new Product());
+        when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
+                .thenReturn(products);
+        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Assertions.assertThat(search.findProducts("1a")).isEmpty();
+    }
 }
