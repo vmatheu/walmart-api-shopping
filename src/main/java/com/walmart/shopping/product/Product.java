@@ -24,9 +24,9 @@ public class Product implements Serializable {
     @Field("price")
     private int price;
 
-    private int priceWithOutDiscount;
+    private int priceWithOutDiscount = 0;
 
-    private boolean priceHaveDiscount;
+    private boolean priceHaveDiscount = false;
 
     @Override
     public Product clone() {

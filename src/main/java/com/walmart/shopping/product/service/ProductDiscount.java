@@ -8,6 +8,7 @@ public class ProductDiscount {
             Product productDiscount = product.clone();
             productDiscount.setPriceWithOutDiscount(product.getPrice());
             productDiscount.setPrice(product.getPrice()/2);
+            productDiscount.setPriceHaveDiscount(true);
             return productDiscount;
         }
         return product;

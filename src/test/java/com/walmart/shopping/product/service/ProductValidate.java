@@ -12,6 +12,7 @@ class ProductValidate {
        product.setPrice(100);
        Product productResult = ProductDiscount.validateDiscount(product, "xxaxx");
        Assertions.assertThat(productResult.getPrice()).isEqualTo(product.getPrice()/2);
+       Assertions.assertThat(productResult.isPriceHaveDiscount()).isTrue();
     }
 
 }
