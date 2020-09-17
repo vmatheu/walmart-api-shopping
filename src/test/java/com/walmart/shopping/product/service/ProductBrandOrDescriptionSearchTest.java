@@ -6,34 +6,38 @@ import com.walmart.shopping.product.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ProductBrandOrDescriptionSearchTest {
 
     @Test
-    void shouldReturnExceptionWhenNotHaveIdProduct() {
+    void shouldReturnEmptyListWhenNotHaveMatch() {
         ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
-        ProductIdSearch productIdSearch = new ProductIdSearch(productRepository);
-
-        Exception exception = assertThrows(NotFoundProductException.class, () -> {
-            productIdSearch.findProducts("1");
-        });
-
-        String expectedMessage = "product id 1 is not found";
-        Assertions.assertThat(exception.getMessage()).isEqualTo(expectedMessage);
+        when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
+                .thenReturn(Collections.emptyList());
+        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Assertions.assertThat(search.findProducts("1ad")).isEmpty();
     }
 
     @Test
-    void shouldReturnListWhitOnlyHaveOneItem() {
+    void shouldReturnListWithResultWhenHaveMatch() {
         ProductRepository productRepository = mock(ProductRepository.class);
-        when(productRepository.findById(anyInt())).thenReturn(Optional.of(new Product()));
-        ProductIdSearch productIdSearch = new ProductIdSearch(productRepository);
-        Assertions.assertThat(productIdSearch.findProducts("1")).containsOnlyOnce(new Product());
+        List<Product> products = new ArrayList<>();
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
+        when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
+                .thenReturn(products);
+        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Assertions.assertThat(search.findProducts("1ad").size()).isEqualTo(3);
     }
 }

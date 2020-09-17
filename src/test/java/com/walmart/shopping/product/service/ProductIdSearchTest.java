@@ -18,10 +18,10 @@ class ProductIdSearchTest {
     void shouldReturnExceptionWhenNotHaveIdProduct() {
         ProductRepository productRepository = mock(ProductRepository.class);
         when(productRepository.findById(anyInt())).thenReturn(Optional.empty());
-        ProductIdSearch productIdSearch = new ProductIdSearch(productRepository);
+        Search search = new ProductIdSearch(productRepository);
 
         Exception exception = assertThrows(NotFoundProductException.class, () -> {
-            productIdSearch.findProducts("1");
+            search.findProducts("1");
         });
 
         String expectedMessage = "product id 1 is not found";
@@ -32,7 +32,7 @@ class ProductIdSearchTest {
     void shouldReturnListWhitOnlyHaveOneItem() {
         ProductRepository productRepository = mock(ProductRepository.class);
         when(productRepository.findById(anyInt())).thenReturn(Optional.of(new Product()));
-        ProductIdSearch productIdSearch = new ProductIdSearch(productRepository);
-        Assertions.assertThat(productIdSearch.findProducts("1")).containsOnlyOnce(new Product());
+        Search search = new ProductIdSearch(productRepository);
+        Assertions.assertThat(search.findProducts("1")).containsOnlyOnce(new Product());
     }
 }
