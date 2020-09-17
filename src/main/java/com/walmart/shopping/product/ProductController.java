@@ -1,5 +1,6 @@
 package com.walmart.shopping.product;
 
+import com.walmart.shopping.product.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.walmart.shopping.core.IntelLogger;

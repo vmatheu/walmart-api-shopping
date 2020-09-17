@@ -1,11 +1,10 @@
 package com.walmart.shopping.product;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.walmart.shopping.product.service.ProductService;
 import com.walmart.shopping.utils.LoggerUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.anyInt;
 
 
 class ProductControllerTest {
