@@ -47,8 +47,7 @@ public class ProductController {
             IntelLogger.error("findProductByString").description("service end")
                 .message(String.format("product search %s error [%s]", search, exception.getMessage()))
                 .to(log);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value()).build();
+           throw exception;
         }
     }
 

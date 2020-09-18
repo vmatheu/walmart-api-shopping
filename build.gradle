@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com.walmart'
@@ -13,20 +14,32 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	compile("org.codehaus.groovy:groovy:2.4.15")
-	compileOnly 'org.projectlombok:lombok:1.18.12'
-	annotationProcessor 'org.projectlombok:lombok:1.18.12'
-	testCompileOnly 'org.projectlombok:lombok:1.18.12'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	compile('io.springfox:springfox-swagger-common:2.9.2') {
+		exclude group: 'net.bytebuddy', module: 'byte-buddy'
+	}
+	compile 'io.rest-assured:json-path:3.0.5'
+
+	compile('org.projectlombok:lombok:1.16.18')
+
+	compile('com.github.tomakehurst:wiremock:2.20.0') {
+		exclude group: 'junit', module: 'junit'
 	}
 
-	testCompile("org.junit.jupiter:junit-jupiter:5.4.2")
+	compile('net.bytebuddy:byte-buddy:1.9.12')
+
+	testCompile("org.springframework.boot:spring-boot-starter-test:2.1.4.RELEASE") {
+		exclude group: 'junit', module: 'junit'
+		exclude group: 'net.bytebuddy', module: 'byte-buddy'
+	}
+
+	testCompile('org.junit.jupiter:junit-jupiter:5.4.2')
 	testCompile('org.mockito:mockito-junit-jupiter:2.23.4')
+	testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'
+	testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.2.0'
 }
 
 task updateDependencies(type: Copy) {
@@ -37,7 +50,18 @@ task updateDependencies(type: Copy) {
 sourceSets {
 	unitTest {
 		java {
-			srcDir 'src/test/java'
+			srcDir 'src/test/unitTest/java'
+		}
+		compileClasspath += sourceSets.main.runtimeClasspath
+		compileClasspath += sourceSets.test.compileClasspath
+		runtimeClasspath = output + compileClasspath
+	}
+	integrationTest {
+		java {
+			srcDir 'src/test/integrationTest/java'
+		}
+		resources {
+			srcDir 'src/test/integrationTest/resources'
 		}
 		compileClasspath += sourceSets.main.runtimeClasspath
 		compileClasspath += sourceSets.test.compileClasspath
@@ -50,4 +74,16 @@ task unitTest(type: Test){
 	description = "Runs Unit Tests"
 	testClassesDirs = sourceSets.unitTest.output.classesDirs
 	classpath = sourceSets.unitTest.runtimeClasspath
+}
+
+task integrationTest(type: Test){
+	useJUnitPlatform()
+	description = "Runs Integration Tests"
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+	configure {
+		systemProperties = [
+				'spring.profiles.active': 'dev'
+		]
+	}
 }
