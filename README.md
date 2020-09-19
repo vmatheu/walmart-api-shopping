@@ -6,7 +6,7 @@ Y solo buscara por brad o descripcion cuando el largo de busqueda se mayor que 3
 Walmart Api Shopping trabaja con una base de datos remota, entonces solo se
 puede usar conectado a internet.
 
-###Operaciones
+### Operaciones
 
 1. Para levantar en tu local
     ```
@@ -65,3 +65,9 @@ puede usar conectado a internet.
     ```
     $ make integration-test
     ```
+     > Nota: El contenedor de pruebas de SpringBoot2 junto con Flapdoodle OSS levanta una base de datos 
+     de mongoDB embebida en cada ejecucion y se cargan 3 registros para realizar 
+     las pruebas. Puedes mirar la clase MongoInit.
+     Referencia: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
+     
+
