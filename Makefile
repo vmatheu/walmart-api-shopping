@@ -17,4 +17,4 @@ docker-clean:
 	docker stop api-shopping && docker rm api-shopping
 
 docker-run: docker-build
-	docker run --name api-shopping -p $PORT:$PORT shopping-api-image
+	docker run -d -p 8080:8080 --name api-shopping api-shopping-image
