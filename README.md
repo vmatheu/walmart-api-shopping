@@ -69,5 +69,13 @@ puede usar conectado a internet.
      de mongoDB embebida en cada ejecucion y se cargan 3 registros para realizar 
      las pruebas. Puedes mirar la clase MongoInit.
      Referencia: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
-     
+
+### Dependencias
+1. Java 8
+2. Gradle 4.10.2
+3. Docker
+4. Springboot 2
+5. MongoDB
+
+
 
