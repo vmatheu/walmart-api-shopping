@@ -4,7 +4,6 @@ import com.walmart.shopping.product.repository.MongoInit;
 import com.walmart.shopping.product.repository.ProductRepository;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
