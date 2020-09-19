@@ -1,6 +1,7 @@
 package com.walmart.shopping.product.service;
 
 import com.walmart.shopping.product.Product;
+import com.walmart.shopping.product.exception.MinimumSizeSearchException;
 import com.walmart.shopping.product.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,6 +47,12 @@ class ProductBrandOrDescriptionSearchTest {
         when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
                 .thenReturn(products);
         Search search = new ProductBrandOrDescriptionSearch(productRepository);
-        Assertions.assertThat(search.findProducts("1a")).isEmpty();
+
+        Exception exception = assertThrows(MinimumSizeSearchException.class, () -> {
+            search.findProducts("1a");
+        });
+
+        String expectedMessage = "minimim size for search is 3";
+        Assertions.assertThat(exception.getMessage()).isEqualTo(expectedMessage);
     }
 }

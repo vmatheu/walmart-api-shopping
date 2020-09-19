@@ -10,6 +10,9 @@ run: assemble
 unit-test:
 	./gradlew unitTest
 
+integration-test:
+	./gradlew integrationTest
+
 docker-build: assemble
 	docker build -t api-shopping-image .
 
