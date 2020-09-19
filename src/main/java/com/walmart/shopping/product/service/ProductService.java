@@ -1,6 +1,7 @@
 package com.walmart.shopping.product.service;
 
 import com.walmart.shopping.product.Product;
+import com.walmart.shopping.product.ProductValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,6 @@ public class ProductService {
     }
 
     private Search getSearch(String search) {
-        return isNumeric(search)? productIdSearch : productBrandOrDescriptionSearch;
+        return ProductValidate.isNumeric(search)? productIdSearch : productBrandOrDescriptionSearch;
     }
-
-    private static boolean isNumeric(String str) {
-        return str.matches("-?\\d+(\\.\\d+)?");
-    }
-
-
 }

@@ -1,5 +1,6 @@
 package com.walmart.shopping.product;
 
+import com.walmart.shopping.product.exception.FormatErrorInputException;
 import com.walmart.shopping.product.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,9 @@ public class ProductController {
     }
 
     private String validateSearchString(String search) {
-      //TODO validad string
+      if (!ProductValidate.isAlphanumeric(search)) {
+          throw new FormatErrorInputException(String.format("search %s is invalid", search));
+      }
       return search;
     }
 }

@@ -102,6 +102,6 @@ class ProductControllerIntegrationTest extends BaseRestIntegrationTest {
                 .statusCode(is(HttpStatus.BAD_REQUEST.value()));
 
         Assertions.assertThat(response.getBody().asString())
-                .isEqualTo("minimum size invalid search");
+                .isEqualTo("minimim size for search is 3");
     }
 }

@@ -31,10 +31,10 @@ public class RestResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(value
-            = { MinimumSizeSearchException.class })
+            = { MinimumSizeSearchException.class, FormatErrorInputException.class })
     protected ResponseEntity<Object> minimumSizeInvalid(
             RuntimeException ex, WebRequest request) {
-        String bodyOfResponse = "minimum size invalid search";
+        String bodyOfResponse = ex.getMessage();
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
