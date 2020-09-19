@@ -6,9 +6,9 @@ import com.walmart.shopping.product.exception.MinimumSizeSearchException;
 import com.walmart.shopping.product.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Collections;
+import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
@@ -19,9 +19,10 @@ class ProductBrandOrDescriptionSearch implements Search {
     private Integer searchMinimumSize;
 
     @Autowired
-    public ProductBrandOrDescriptionSearch(ProductRepository productRepository) {
+    public ProductBrandOrDescriptionSearch(ProductRepository productRepository,
+        @Value("${api.params.minimumSearchBrandOrDescription}") Integer searchMinimumSize) {
         this.productRepository = productRepository;
-        this.searchMinimumSize = 3;
+        this.searchMinimumSize = searchMinimumSize;
     }
 
     @Override

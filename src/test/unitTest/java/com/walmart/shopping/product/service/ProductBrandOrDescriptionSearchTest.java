@@ -17,12 +17,14 @@ import static org.mockito.Mockito.when;
 
 class ProductBrandOrDescriptionSearchTest {
 
+    private static final Integer searchMinimumSize = 3;
+
     @Test
     void shouldReturnEmptyListWhenNotHaveMatch() {
         ProductRepository productRepository = mock(ProductRepository.class);
         when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
                 .thenReturn(Collections.emptyList());
-        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Search search = new ProductBrandOrDescriptionSearch(productRepository, searchMinimumSize);
         Assertions.assertThat(search.findProducts("1ad")).isEmpty();
     }
 
@@ -35,7 +37,7 @@ class ProductBrandOrDescriptionSearchTest {
         products.add(new Product());
         when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
                 .thenReturn(products);
-        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Search search = new ProductBrandOrDescriptionSearch(productRepository, searchMinimumSize);
         Assertions.assertThat(search.findProducts("1ad").size()).isEqualTo(3);
     }
 
@@ -46,7 +48,7 @@ class ProductBrandOrDescriptionSearchTest {
         products.add(new Product());
         when(productRepository.findByDescriptionLikeOrBrandLike(anyString(), anyString()))
                 .thenReturn(products);
-        Search search = new ProductBrandOrDescriptionSearch(productRepository);
+        Search search = new ProductBrandOrDescriptionSearch(productRepository, searchMinimumSize);
 
         Exception exception = assertThrows(MinimumSizeSearchException.class, () -> {
             search.findProducts("1a");

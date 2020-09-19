@@ -8,3 +8,7 @@ spring:
 server:
   servlet:
     context-path: /api/walmart/v1
+
+api:
+  params:
+    minimumSearchBrandOrDescription: 3
