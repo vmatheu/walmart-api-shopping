@@ -32,7 +32,6 @@ public class IntelLogger implements Constants {
         private String action = EMPTY_STRING;
         private String description = EMPTY_STRING;
         private String message = EMPTY_STRING;
-        private String requestId = EMPTY_STRING;
 
         public LoggerRegister description(String description) {
             this.description = description;
@@ -44,18 +43,13 @@ public class IntelLogger implements Constants {
             return this;
         }
 
-        public LoggerRegister requestId(String requestId) {
-            this.requestId = requestId;
-            return this;
-        }
-
         public void to(org.slf4j.Logger log) {
             switch (level) {
-                case "info" : log.info(String.format("requestId=%s, action=%s, description=%s, message=%s",
-                        requestId, action, description, message));
+                case "info" : log.info(String.format("action=%s, description=%s, message=%s",
+                        action, description, message));
                     break;
-                case "error" : log.error(String.format("requestId=%s, action=%s, description=%s, error=%s",
-                        requestId, action, description, message));
+                case "error" : log.error(String.format("action=%s, description=%s, error=%s",
+                        action, description, message));
                     break;
             }
         }

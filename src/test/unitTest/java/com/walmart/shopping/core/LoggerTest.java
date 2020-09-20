@@ -20,13 +20,12 @@ class LoggerTest {
         IntelLogger.info("test")
                 .description("description")
                 .message("message")
-                .requestId("reqId")
                 .to(log.getLogger());
 
         List<ILoggingEvent> logsList = log.getList();
 
         Assertions.assertThat(logsList.get(0).toString())
-                .isEqualTo("[INFO] requestId=reqId, action=test, description=description, message=message");
+                .isEqualTo("[INFO] action=test, description=description, message=message");
         Assertions.assertThat(logsList.size()).isEqualTo(1);
 
     }
@@ -38,13 +37,12 @@ class LoggerTest {
         IntelLogger.error("testError")
                 .description("description")
                 .message("message")
-                .requestId("reqId")
                 .to(log.getLogger());
 
         List<ILoggingEvent> logsList = log.getList();
 
         Assertions.assertThat(logsList.get(0).toString())
-                .isEqualTo("[ERROR] requestId=reqId, action=testError, description=description, error=message");
+                .isEqualTo("[ERROR] action=testError, description=description, error=message");
         Assertions.assertThat(logsList.size()).isEqualTo(1);
 
     }
@@ -57,7 +55,6 @@ class LoggerTest {
             IntelLogger.info("")
                     .description("description")
                     .message("message")
-                    .requestId("reqId")
                     .to(log.getLogger());
         });
 

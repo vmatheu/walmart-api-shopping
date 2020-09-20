@@ -46,9 +46,9 @@ class ProductControllerTest {
         productController.findProductByString("123");
         Assertions.assertThat(logsList.size()).isEqualTo(2);
         Assertions.assertThat(logsList.get(0).toString())
-                .isEqualTo("[INFO] requestId=, action=findProductByString, description=service init, message=product search 123");
+                .isEqualTo("[INFO] action=findProductByString, description=service init, message=product search 123");
         Assertions.assertThat(logsList.get(1).toString())
-                .isEqualTo("[INFO] requestId=, action=findProductByString, description=service end, message=product search 123");
+                .isEqualTo("[INFO] action=findProductByString, description=service end, message=product search 123");
     }
 
 
@@ -70,9 +70,9 @@ class ProductControllerTest {
 
         Assertions.assertThat(logsList.size()).isEqualTo(2);
         Assertions.assertThat(logsList.get(0).toString())
-                .isEqualTo("[INFO] requestId=, action=findProductByString, description=service init, message=product search %$123");
+                .isEqualTo("[INFO] action=findProductByString, description=service init, message=product search %$123");
         Assertions.assertThat(logsList.get(1).toString())
-                .isEqualTo("[ERROR] requestId=, action=findProductByString, description=service end, error=product search %$123 error [search %$123 is invalid]");
+                .isEqualTo("[ERROR] action=findProductByString, description=service end, error=product search %$123 error [search %$123 is invalid]");
 
     }
 }
