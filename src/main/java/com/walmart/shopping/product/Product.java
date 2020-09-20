@@ -55,4 +55,16 @@ public class Product implements Serializable {
         if (description != null ? !description.equals(product.description) : product.description != null) return false;
         return image != null ? image.equals(product.image) : product.image == null;
     }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (brand != null ? brand.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + price;
+        result = 31 * result + priceWithOutDiscount;
+        result = 31 * result + (priceHaveDiscount ? 1 : 0);
+        return result;
+    }
 }

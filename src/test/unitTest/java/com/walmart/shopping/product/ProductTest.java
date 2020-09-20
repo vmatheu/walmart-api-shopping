@@ -19,4 +19,17 @@ class ProductTest {
         Product productClone = product.clone();
         Assertions.assertThat(product.equals(productClone)).isTrue();
     }
+
+    @Test
+    void shouldBeReturnHashcode() {
+        Product product = new Product();
+        product.setImage("image");
+        product.setPriceWithOutDiscount(50);
+        product.setDescription("desc");
+        product.setId(1);
+        product.setBrand("brand");
+        product.setPrice(100);
+
+        Assertions.assertThat(product.hashCode()).isNotNull();
+    }
 }
