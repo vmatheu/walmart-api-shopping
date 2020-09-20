@@ -11,4 +11,4 @@ server:
 
 api:
   params:
-    minimumSearchBrandOrDescription: 3
+    minimumSearchBrandOrDescription: 4

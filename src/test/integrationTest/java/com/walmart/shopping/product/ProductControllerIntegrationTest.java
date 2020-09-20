@@ -95,13 +95,13 @@ class ProductControllerIntegrationTest extends BaseRestIntegrationTest {
     @Test
     void shouldReturnHttpStatus400WhenSearchByStringIsLessMore3Character() {
         Response response = requestSpecification.when()
-                .get(RESOURCE_PATH+"os");
+                .get(RESOURCE_PATH+"oas");
 
         response
                 .then().assertThat()
                 .statusCode(is(HttpStatus.BAD_REQUEST.value()));
 
         Assertions.assertThat(response.getBody().asString())
-                .isEqualTo("minimim size for search is 3");
+                .isEqualTo("minimim size for search is 4");
     }
 }
