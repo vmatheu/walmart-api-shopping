@@ -61,7 +61,11 @@ puede usar conectado a internet.
     ```
     $ make unit-test
     ```
-2. Para correr las pruebas de integracion en tu local
+2. Para correr las pruebas unitarias en docker
+    ```
+    $ make docker-unit-test
+    ```   
+3. Para correr las pruebas de integracion en tu local
     ```
     $ make integration-test
     ```
@@ -69,6 +73,11 @@ puede usar conectado a internet.
      de mongoDB embebida en cada ejecucion y se cargan 3 registros para realizar 
      las pruebas. Puedes mirar la clase MongoInit.
      Referencia: https://github.com/flapdoodle-oss/de.flapdoodle.embed.mongo
+
+4. Para correr las pruebas de integracion en docker
+    ```
+    $ make docker-integration-test
+    ```
 
 ### Dependencias
 1. Java 8
