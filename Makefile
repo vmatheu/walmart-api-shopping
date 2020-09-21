@@ -21,3 +21,9 @@ docker-clean:
 
 docker-run: docker-build
 	docker run -d -p 8080:8080 --name api-shopping api-shopping-image
+
+docker-unit-test:
+	docker run --rm -v ${PWD}:/shopping -w /shopping openjdk:8 ./gradlew unitTest
+
+docker-integration-test:
+	docker run --rm -v ${PWD}:/shopping -w /shopping openjdk:8 ./gradlew integrationTest
